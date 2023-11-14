@@ -14,12 +14,7 @@
 #include "utils.h"
 
 Edge edge(int u, int v) {
-    Edge e = {u, v, 0.0f};
-    return e;
-}
-
-Edge edgeWithWeight(int u, int v, float weight) {
-    Edge e = {u, v, weight};
+    Edge e = {u, v};
     return e;
 }
 
