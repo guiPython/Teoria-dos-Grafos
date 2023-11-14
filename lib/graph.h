@@ -12,12 +12,11 @@
 
 typedef int Vertex;
 typedef float Weight;
-typedef struct {Vertex u; Vertex v; Weight weight;} Edge;
+typedef struct {Vertex u; Vertex v} Edge;
 typedef struct graph* Graph;
 
 // Edge and graph constructors
 Edge edge(Vertex, Vertex);
-Edge edgeWithWeight(Vertex, Vertex, Weight);
 Graph graph(int);
 
 // Deallocates the memory used by a graph
