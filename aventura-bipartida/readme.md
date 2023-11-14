@@ -33,12 +33,14 @@ Se não for possível a divisão, seu programa deve imprimir duas linhas: a prim
 # Exemplos
 
 ### Entrada 1
+```
 5 5
 0 1
 0 4
 2 4
 3 1
 3 4
+```
 
 ### Saída 1
 ```
