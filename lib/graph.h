@@ -12,7 +12,7 @@
 
 typedef int Vertex;
 typedef float Weight;
-typedef struct {Vertex u; Vertex v} Edge;
+typedef struct {Vertex u; Vertex v;} Edge;
 typedef struct graph* Graph;
 
 // Edge and graph constructors
