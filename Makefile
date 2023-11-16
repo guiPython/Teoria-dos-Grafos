@@ -6,3 +6,6 @@ desbravandoCiclos: desbravando-ciclos/exercicio.c lib/utils.c lib/graph.c lib/gr
 
 conectandoPovoadosDistantes: conectando-povoados-distantes/exercicio.c lib/utils.c lib/graph.c lib/graph_adjacency_list.c
 	gcc conectando-povoados-distantes/exercicio.c lib/utils.c lib/graph.c lib/graph_adjacency_list.c -o conectandoPovoadosDistantes -lm
+
+desvendandoMagiaDasConexoes: desvendando-a-magia-das-conexoes/exercicio.c lib/utils.c lib/graph.c lib/graph_adjacency_list.c
+	gcc desvendando-a-magia-das-conexoes/exercicio.c lib/utils.c lib/graph.c lib/graph_adjacency_list.c -o desvendandoMagiaDasConexoes -lm
