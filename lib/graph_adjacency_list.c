@@ -18,13 +18,15 @@ typedef struct node *link;
 
 struct node {
     Vertex w; 
+    Weight weight;
     link next;
 };
 
-link list_insert(link head, Vertex w) {
+link list_insert(link head, Vertex w, Weight weight) {
     link p = Malloc(sizeof(*p));
     p->w = w;
     p->next = head;
+    p->weight = weight;
     return p;
 }
 
@@ -96,8 +98,8 @@ void graph_insert_edge(Graph G, Edge e) {
     assert(e.u >= 0 && e.u < G->V);
     assert(e.v >= 0 && e.v < G->V);
 
-    G->adj[e.u] = list_insert(G->adj[e.u], e.v);
-    G->adj[e.v] = list_insert(G->adj[e.v], e.u);
+    G->adj[e.u] = list_insert(G->adj[e.u], e.v, e.weight);
+    G->adj[e.v] = list_insert(G->adj[e.v], e.u, e.weight);
     G->E += 1;
 }
 
@@ -106,7 +108,7 @@ void digraph_insert_edge(Graph G, Edge e) {
     assert(e.u >= 0 && e.u < G->V);
     assert(e.v >= 0 && e.v < G->V);
 
-    G->adj[e.u] = list_insert(G->adj[e.u], e.v);
+    G->adj[e.u] = list_insert(G->adj[e.u], e.v, e.weight);
     G->E += 1;  
 }
 
@@ -141,8 +143,10 @@ int graph_edges(Graph G, Edge* edges) {
     int k = 0;
     for (Vertex u = 0; u < G->V; u++)
         for (link p = G->adj[u]; p != NULL; p = p->next) {
-            edges[k] = edge(u, p->w);
-            k += 1;
+            if(p->weight > 0) {
+                edges[k] = edge(u, p->w, 1);
+                k += 1;
+            }
         }
     return k;
 }
@@ -170,6 +174,19 @@ int graph_neighbors(Graph G, Vertex u, Vertex* neigh) {
     return k;
 }
 
+int graph_neighbors_with_weight(Graph G, Vertex u, Pair* pairs) {
+    assert(G);
+    assert(u >= 0 && u < G->V);
+    assert(pairs);
+    
+    int k = 0;
+    for (link p = G->adj[u]; p != NULL; p = p->next) {
+        pairs[k] = pair(p->w, p->weight);
+        k += 1;
+    }
+    return k;
+}
+
 Graph graph_copy(Graph G) {
     assert(G);
 
@@ -177,7 +194,7 @@ Graph graph_copy(Graph G) {
 
     for (Vertex u = 0; u < G->V; u++)
         for (link p = G->adj[u]; p != NULL; p = p->next)
-            graph_insert_edge(H, edge(u, p->w));
+            graph_insert_edge(H, edge(u, p->w, p->weight));
 
     return H;
 }

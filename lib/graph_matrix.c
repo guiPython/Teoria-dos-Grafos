@@ -17,7 +17,7 @@
 struct graph {
     int V;
     int E;
-    char **adj;
+    double **adj;
 };
 
 Graph graph(int V) {
@@ -103,8 +103,8 @@ int graph_edges(Graph G, Edge* edges) {
     int k = 0;
     for (Vertex u = 0; u < G->V; u++)
         for (Vertex v = 0; v < G->V; v++)
-            if (G->adj[u][v]) {
-                edges[k] = edge(u, v);
+            if (G->adj[u][v] > 0) {
+                edges[k] = edge(u, v, G->adj[u][v]);
                 k += 1;
             }
     return k;
@@ -116,7 +116,7 @@ int graph_vertex_degree(Graph G, Vertex u) {
 
     int d = 0;
     for (Vertex v = 0; v < G->V; v++)
-        if (G->adj[u][v])
+        if (G->adj[u][v] > 0)
             d += 1;
     return d;
 
@@ -129,8 +129,22 @@ int graph_neighbors(Graph G, Vertex u, Vertex* neigh) {
 
     int k = 0;
     for (Vertex v = 0; v < G->V; v++)
-        if (G->adj[u][v]) {
+        if (G->adj[u][v] > 0) {
             neigh[k] = v;
+            k += 1;
+        }
+    return k;
+}
+
+int graph_neighbors_with_weight(Graph G, Vertex u, Pair* pairs) {
+    assert(G);
+    assert(u >= 0 && u < G->V);
+    assert(pairs);
+
+    int k = 0;
+    for (Vertex v = 0; v < G->V; v++)
+        if (G->adj[u][v] > 0) {
+            pairs[k] = pair(v, G->adj[u][v]);
             k += 1;
         }
     return k;
@@ -143,8 +157,8 @@ Graph graph_copy(Graph G) {
     
     for (Vertex u = 0; u < G->V; u++)
         for (Vertex v = 0; v < G->V; v++)
-            if (G->adj[u][v])
-                graph_insert_edge(H, edge(u, v));
+            if (G->adj[u][v] > 0)
+                graph_insert_edge(H, edge(u, v, G->adj[u][v]));
     return H;
 }
 

@@ -13,9 +13,14 @@
 #include "graph.h"
 #include "utils.h"
 
-Edge edge(int u, int v) {
-    Edge e = {u, v};
+Edge edge(Vertex u, Vertex v, Weight weight) {
+    Edge e = {u, v, weight};
     return e;
+}
+
+Pair pair(Vertex v, Weight weight) {
+    Pair p = {v, weight};
+    return p;
 }
 
 void graph_insert_edges(Graph G, Edge* edges, int size) {
@@ -35,14 +40,21 @@ Graph graph_squared(Graph G) {
     Graph H = graph(V);
 
     // There is an edge uv in H if dist_G(u,v) <= 2 
-    for (int u = 0; u < V; u++)
-        for (int v = u+1; v < V; v++)
-            if (graph_has_edge(G, edge(u, v))) 
-                graph_insert_edge(H, edge(u, v));
-            else
-                for (int w = 0; w < V; w++)
-                    if (graph_has_edge(G, edge(u, w)) && graph_has_edge(G, edge(v, w)))
-                        graph_insert_edge(H, edge(u, v));
+    for (int u = 0; u < V; u++) {
+        for (int v = u+1; v < V; v++) {
+            float weight = graph_has_edge(G, edge(u, v, 1));
+            if (weight > 0) {
+                graph_insert_edge(H, edge(u, v, weight));
+            }
+            else {
+                for (int w = 0; w < V; w++) {
+                    if (graph_has_edge(G, edge(u, w, 1)) && graph_has_edge(G, edge(v, w, 1))) {
+                        graph_insert_edge(H, edge(u, v, 1));
+                    }
+                }
+            }
+        }
+    }
     return H;
 }
 
@@ -57,7 +69,7 @@ Graph graph_GNP(int V, double p) {
     for (int u = 0; u < V; u++)
         for (int v = u+1; v < V; v++)
             if (rand_double() <= p)
-                graph_insert_edge(G, edge(u, v));
+                graph_insert_edge(G, edge(u, v, 1));
     return G;
 }
 
@@ -82,7 +94,7 @@ Graph graph_euclidean_neighborhood(int V, double dist) {
                             +(pos[u].y - pos[v].y) * (pos[u].y - pos[v].y));
 
             if (d <= dist)
-                graph_insert_edge(G, edge(u, v));
+                graph_insert_edge(G, edge(u, v, 1));
         }
     return G;
 }

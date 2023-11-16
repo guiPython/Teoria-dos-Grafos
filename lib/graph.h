@@ -11,12 +11,14 @@
 #define __GRAPH_H_
 
 typedef int Vertex;
-typedef float Weight;
-typedef struct {Vertex u; Vertex v;} Edge;
+typedef double Weight;
+typedef struct {Vertex u; Vertex v; Weight weight;} Edge;
+typedef struct {Vertex v; Weight weight;} Pair;
 typedef struct graph* Graph;
 
-// Edge and graph constructors
-Edge edge(Vertex, Vertex);
+// Edge, Pair and graph constructors
+Edge edge(Vertex, Vertex, Weight);
+Pair pair(Vertex, Weight);
 Graph graph(int);
 
 // Deallocates the memory used by a graph
@@ -73,6 +75,16 @@ int graph_vertex_degree(Graph, Vertex);
  * @return int the amount of neighbors of the input vertex
  */
 int graph_neighbors(Graph, Vertex, Vertex*);
+
+/**
+ * Returns all neighbors of a vertex
+ * 
+ * @param Graph the input graph
+ * @param Vertex the input vertex
+ * @param Pair* an allocated array to be filled with the neighbors of the input pair verte weight
+ * @return int the amount of neighbors of the input vertex
+ */
+int graph_neighbors_with_weight(Graph, Vertex, Pair*);
 
 // Returns a copy of a graph
 Graph graph_copy(Graph);
