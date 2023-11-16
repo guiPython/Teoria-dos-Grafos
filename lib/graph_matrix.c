@@ -67,6 +67,16 @@ void graph_insert_edge(Graph G, Edge e) {
     G->adj[e.v][e.u] = 1;
 }
 
+void digraph_insert_edge(Graph G, Edge e) {
+    assert(G);
+    assert(e.u >= 0 && e.u < G->V);
+    assert(e.v >= 0 && e.v < G->V);
+
+    if (!G->adj[e.u][e.v])
+        G->E += 1;
+    G->adj[e.u][e.v] = 1;   
+}
+
 void graph_remove_edge(Graph G, Edge e) {
     assert(G);
     assert(e.u >= 0 && e.u < G->V);

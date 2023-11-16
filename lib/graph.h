@@ -29,6 +29,8 @@ int graph_num_edges(Graph);
 
 // Inserts an edge on a graph
 void graph_insert_edge(Graph, Edge);
+// Insert an edge on a digraph
+void digraph_insert_edge(Graph, Edge);
 /**
  * Inserts several edges in a graph.
  * 
