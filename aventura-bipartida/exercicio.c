@@ -55,7 +55,7 @@ int main() {
     Graph grafo = graph(vertices);
     for(int i = 0; i < arestas; i++) {
         scanf("%d %d", &origem, &destino);
-        graph_insert_edge(grafo, edge(origem, destino));
+        graph_insert_edge(grafo, edge(origem, destino, 1));
     }
     sera_que_vai_ter_guerra(grafo);
     graph_destroy(grafo);

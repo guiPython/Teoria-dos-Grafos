@@ -40,7 +40,7 @@ int main() {
 
     for(int i = 0; i < arestas; i++) {
         scanf("%d %d", &origem, &destino);
-        graph_insert_edge(grafo, edge(origem, destino));
+        graph_insert_edge(grafo, edge(origem, destino, 1));
     }
 
     if(tem_ciclo(grafo)) printf("GUERRA!\n");
