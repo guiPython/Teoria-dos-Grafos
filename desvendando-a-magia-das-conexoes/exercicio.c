@@ -57,7 +57,7 @@ int main() {
 
     for(int i = 0; i < edges; i++) {
         scanf("%d %d", &u, &v);
-        digraph_insert_edge(g, edge(u, v));
+        digraph_insert_edge(g, edge(u, v, 1));
     }
 
     tarjan(g);
